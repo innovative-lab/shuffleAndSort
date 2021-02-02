@@ -5,10 +5,20 @@
     let numBoxEl = document.getElementById('num_box');
     let shuffleEl = document.getElementById('Shuffle');
     let sortEl = document.getElementById('Sort');
+    let bodyEl = document.getElementsByTagName('body')[0];
+    let mobScreen = false;
     
     var init = () => {
         sortEl.addEventListener('click', initiateSort);
         shuffleEl.addEventListener('click', initiateShuffle);
+        window.addEventListener('resize', checkWidth);
+
+        checkWidth(); 
+    }
+
+    var checkWidth = () => {
+        mobScreen = bodyEl.offsetWidth < 600 ?  true : false;
+        
         resetUI();
         loadData(dataSet, numBoxEl);
     }
@@ -24,7 +34,14 @@
         let numEl = document.createElement('div');
         numEl.className = 'number';
         numEl.innerHTML = d;
-        numEl.style.backgroundColor = colorSet[d - 1]
+        if(mobScreen){
+            numEl.style.borderLeft = '8px';
+            numEl.style.borderLeftStyle = 'solid';
+            numEl.style.borderLeftColor = colorSet[d - 1];
+            numEl.style.backgroundColor = "#efefef";
+        } else {
+            numEl.style.backgroundColor = colorSet[d - 1];
+        }
         return numEl;
     }
 
